@@ -3,6 +3,10 @@ import { toTypedSchema } from '@vee-validate/zod';
 import { UserSchema } from '~~/shared/schemas';
 import { FetchError } from 'ofetch'
 
+definePageMeta({
+    middleware: 'ensure-unauthed'
+});
+
 const isLoading = ref(false);
 const isSubmitted = ref(false);
 const submitError = ref('');
@@ -49,9 +53,9 @@ const onSubmit = () => {
         <div class="w-md bg-base ring-elevated ring-1 rounded-lg p-4">
             <h1 class="text-xl font-bold">Sign Up</h1>
             <form class="flex flex-col gap-4" @submit.prevent="onSubmit">
-                <FormInput type="text" label="Username" name="username" placeholder="Enter your username..."
+                <FormInput type="text" label="Username" name="username" placeholder="Creaete your username..."
                     :error="errors.username" />
-                <FormInput type="password" label="Password" name="password" placeholder="Enter your password..." />
+                <FormInput type="password" label="Password" name="password" placeholder="Create your password..." />
                 <button type="submit" class="bg-brand hover:bg-brand/75 w-full p-2 rounded-sm font-medium">
                     Create account
                 </button>

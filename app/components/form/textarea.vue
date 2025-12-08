@@ -1,6 +1,5 @@
 <script setup lang="ts">
 const props = defineProps<{
-    type: 'text' | 'password';
     label: string,
     name: string,
     placeholder?: string,
@@ -12,8 +11,8 @@ const props = defineProps<{
     <label class="flex flex-col">
         <span class="mb-1 font-medium">{{ label }}</span>
         <Field 
+            as="textarea"
             :name
-            :type
             :placeholder
             class="outline-none ring-1 focus:ring-2 ring-highlight focus:ring-brand rounded-sm p-2"
             :class="{

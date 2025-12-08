@@ -18,3 +18,21 @@ export async function createUserAndGetSession(username: string, password: string
     }
 
 }
+
+export async function signInUser(username: string, password: string): Promise<
+    { error: { text: string, code: number }, data: null } | 
+    { error: null, data: string } > {
+
+    const foundUser = await User.findOne({ username });
+
+    if (!foundUser) {
+        return { error: { text: 'No user with that name exists.', code: 404 }, data: null };
+    }
+    
+    // coerce to boolean
+    if (foundUser.password === password) {
+        return { error: null, data: foundUser.token };
+    } else {
+        return { error: { text: 'Incorrect password', code: 403 }, data: null };
+    }
+}

@@ -12,6 +12,7 @@ export const User = defineMongooseModel({
         password: {
             type: 'string',
             required: true,
+            min: 8
         },
         token: {
             type: 'string',
