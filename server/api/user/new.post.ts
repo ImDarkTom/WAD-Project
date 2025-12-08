@@ -1,4 +1,4 @@
-import { User } from '~~/server/models/user';
+import { createUserAndGetSession } from '~~/server/util/user';
 import { UserSchema } from '~~/shared/schemas';
 
 export default defineEventHandler(async (event) => {
@@ -22,10 +22,16 @@ export default defineEventHandler(async (event) => {
         }));
     }
 
-    const newUser = new User({
-        ...bodyParse.data
-    });
+    const { data, error } = await createUserAndGetSession(bodyParse.data.username, bodyParse.data.password);
     
-    const result = await newUser.save()
-    return result;
+    if (error) {
+        return sendError(event, createError({
+            status: error.code,
+            statusMessage: error.text,
+        }));
+    }
+
+    setCookie(event, 'token', data);
+    
+    return { data: 'ok' };
 });
