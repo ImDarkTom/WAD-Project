@@ -1,0 +1,28 @@
+@import "tailwindcss";
+
+@theme {
+    --color-surface: hsl(300, 15%, 5%);
+    --color-base: hsl(300, 15%, 10%);
+    --color-elevated: hsl(300, 15%, 20%);
+
+    --color-text: hsl(300, 15%, 90%);
+    --color-text-secondary: hsl(300, 15%, 80%);
+
+    --color-highlight: hsl(300, 15%, 30%);
+
+    --color-brand-active: hsl(300, 50%, 40%);
+    --color-brand: hsl(300, 50%, 50%);
+
+    --color-brand-400: hsl(300, 50%, 60%);
+    --color-brand-300: hsl(300, 50%, 70%);
+    --color-brand-200: hsl(300, 50%, 80%);
+    --color-brand-100: hsl(300, 50%, 90%);
+    --color-brand-50: hsl(300, 50%, 95%);
+
+    --color-errortxt: hsl(0, 40%, 50%);
+    --color-errorbg: hsl(0, 50%, 25%)
+}
+
+body {
+    @apply bg-surface text-brand-50 md:overflow-hidden;
+}
