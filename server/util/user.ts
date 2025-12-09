@@ -1,3 +1,5 @@
+import { User } from "../models/user";
+
 export async function createUserAndGetSession(username: string, password: string): Promise<{ error: { text: string, code: number }, data: null } | { error: null, data: string }> {
     const newUser = new User({
         username,

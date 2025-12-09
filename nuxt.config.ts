@@ -4,12 +4,7 @@ import tailwindcss from "@tailwindcss/vite";
 export default defineNuxtConfig({
     compatibilityDate: '2025-07-15',
     devtools: { enabled: true },
-    modules: ['nuxt-mongoose', '@vee-validate/nuxt'],
-    mongoose: {
-        uri: 'mongodb://localhost:27017/WADReviews',
-        modelsDir: 'models',
-        devtools: true
-    },
+    modules: ['@vee-validate/nuxt'],
     vite: {
         plugins: [
             tailwindcss(),
