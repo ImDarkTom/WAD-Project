@@ -1,3 +1,4 @@
+import { Review } from '~~/server/models/review';
 import { ReviewSchema } from '~~/shared/schemas'
 
 export default defineEventHandler(async (event) => {

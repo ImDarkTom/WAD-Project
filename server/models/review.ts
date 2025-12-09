@@ -7,16 +7,26 @@ const reviewSchema = new Schema({
     title: {
         type: 'string',
         required: true,
+        minLength: 3,
+        maxLength: 256,
     },
     content: {
         type: 'string',
         required: true,
+        minLength: 1,
+        maxLength: 3000,
     },
     rating: {
         type: Number,
         required: true,
         min: 0,
         max: 10,
+    },
+    pros: {
+        type: [String],
+    },
+    cons: {
+        type: [String],
     },
     author: {
         type: Schema.Types.ObjectId,
