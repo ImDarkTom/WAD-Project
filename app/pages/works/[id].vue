@@ -4,7 +4,7 @@ definePageMeta({
 });
 
 const route = useRoute();
-const bookId = route.params.id;
+const workId = route.params.id;
 
 type WorkInfoResponse = {
     title: string,
@@ -39,7 +39,7 @@ type WorkInfoResponse = {
     },
 }
 
-const { data, error, pending, refresh } = useFetch<WorkInfoResponse>(`https://openlibrary.org/works/${bookId}.json`, { lazy: true });
+const { data, error, pending, refresh } = useFetch<WorkInfoResponse>(`https://openlibrary.org/works/${workId}.json`, { lazy: true });
 
 const starRating = ref(0);
 
@@ -50,8 +50,13 @@ const starRating = ref(0);
         <div v-if="pending">
             <LoadingIcon />
         </div>
-        <div v-else-if="error || !data">
-            {{ error }}
+        <div v-else-if="error || !data" class="flex flex-col gap-2 items-center">
+            <div class="flex min-w-full bg-errorbg p-4 rounded-lg">
+                Oh no! {{ error ?? 'No data for book found.'  }}
+            </div>
+            <RouterLink to="/" class="hover:underline">
+                Back home?
+            </RouterLink>
         </div>
         <template v-else>
             <div class="flex flex-row gap-4 ring-1 ring-highlight p-4 rounded-lg">
@@ -65,7 +70,7 @@ const starRating = ref(0);
             </div>
             <div class="flex flex-col gap-4 ring-1 ring-highlight p-4 rounded-lg">
                 <h2 class="text-xl font-medium">Review</h2>
-                <ReviewForm :work-id="(bookId as string)" />
+                <ReviewForm :work-id="(workId as string)" />
             </div>
         </template>
     </div>

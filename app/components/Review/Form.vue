@@ -2,7 +2,7 @@
 import { InsertReviewSchema, type InsertReviewSchemaType } from '~~/shared/schemas';
 import { FetchError } from 'ofetch'
 
-defineProps<{
+const props = defineProps<{
     workId: string,
 }>();
 
@@ -11,7 +11,7 @@ const isSubmitted = ref(false);
 const submitError = ref('');
 
 const { handleSubmit, errors, meta, setErrors } = useForm({
-    validationSchema: toTypedSchema(InsertReviewSchema)
+    validationSchema: toTypedSchema(InsertReviewSchema.omit({ book: true }))
 });
 
 const onSubmit = () => {
@@ -24,7 +24,8 @@ const onSubmit = () => {
                 title: values.title,
                 content: values.content,
                 rating: starRating.value,
-            }
+                book: props.workId,
+            };
 
             await $fetch('/api/reviews/create', {
                 method: 'POST',
@@ -71,7 +72,7 @@ const starRating = ref(0);
                     <Icon name="material-symbols:star-half-rounded" size="32" />
                 </div>
             </div>
-            {{ errors }}
+            <!-- {{ errors }} -->
         </div>
         <button type="submit" class="bg-brand hover:bg-brand/75 p-2 rounded-sm">
             Publish

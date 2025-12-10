@@ -10,7 +10,15 @@ const props = defineProps<{
 
 <template>
     <article class="w-full ring-1 ring-inset ring-highlight p-4 rounded-lg">
-        <h2 class="text-xl">{{ review.title }}</h2>
+        <div class="flex flex-row justify-between">
+            <h2 class="text-xl">{{ review.title }}</h2>
+            <RouterLink :to="`/works/${review.book.workId}`">
+                <span class="text-lg text-text-secondary flex flex-row gap-1 items-center justify-center hover:bg-highlight py-0.5 px-1 rounded-sm">
+                    <Icon name="material-symbols:book-ribbon-outline-rounded" />
+                    {{review.book.title}}
+                </span>
+            </RouterLink>
+        </div>
         <span class="text-text-secondary text-sm"> 
             by
             <RouterLink :to="`/reviews/${props.review.author.username}`" class="hover:underline">

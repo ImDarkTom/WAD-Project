@@ -3,6 +3,17 @@ import mongoose, { Schema } from 'mongoose';
 // https://stackoverflow.com/questions/26008555/creating-a-foreign-key-relationship-in-mongoose
 // https://mongoosejs.com/docs/guide.html#timestamps
 
+const externalBookInfoSchema = new Schema({
+    title: {
+        type: String,
+        required: true,
+    },
+    workId: {
+        type: String,
+        required: true,
+    },
+});
+
 const reviewSchema = new Schema({
     title: {
         type: String,
@@ -10,6 +21,7 @@ const reviewSchema = new Schema({
         minLength: 3,
         maxLength: 256,
     },
+    book: externalBookInfoSchema,
     content: {
         type: String,
         required: true,

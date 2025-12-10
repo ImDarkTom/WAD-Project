@@ -1,6 +1,7 @@
 import { Review } from '~~/server/models/review';
 import defineAuthenticatedEventHander from '~~/server/util/defineAuthenticatedEventHandler';
-import { InsertReviewSchema } from '~~/shared/schemas'
+import { getBookTitleByWorkId } from '~~/server/util/openlibrary';
+import { InsertReviewSchema, ReviewSchemaType } from '~~/shared/schemas'
 
 export default defineAuthenticatedEventHander(async (event) => {
     const bodyParse = await readValidatedBody(event, InsertReviewSchema.safeParse);
@@ -23,10 +24,26 @@ export default defineAuthenticatedEventHander(async (event) => {
         }));
     }
 
-    const newReview = new Review({
+    const workId = bodyParse.data.book;
+    const bookTitleInfo = await getBookTitleByWorkId(bodyParse.data.book);
+
+    if ('error' in bookTitleInfo) {
+        return sendError(event, createError({
+            statusCode: 400,
+            statusMessage: 'Invalid book ID',
+        }));
+    }
+
+    const reviewData: ReviewSchemaType = {
         ...bodyParse.data,
         author: event.context.user._id,
-    });
+        book: {
+            title: bookTitleInfo.title,
+            workId,
+        },
+    };
+
+    const newReview = new Review(reviewData);
     
     const result = await newReview.save()
     return result;
