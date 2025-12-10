@@ -1,31 +1,19 @@
 import { Review } from "~~/server/models/review";
-import defineAuthenticatedEventHander from "~~/server/util/defineAuthenticatedEventHandler";
-import { findUserByUsername } from "~~/server/util/user";
 import { PopulatedReviewSchemaType } from "~~/shared/schemas";
 
-// https://nuxt.com/docs/4.x/directory-structure/server#error-handling
+export default defineEventHandler(async (event) => {
+    const query = event.context.params?.query;
 
-export default defineAuthenticatedEventHander(async (event) => {
-    const username = event.context.params?.username;
-
-    if (!username) {
+    if (!query) {
         return sendError(event, createError({
             statusCode: 400,
-            statusMessage: 'Username must not be blank.'
+            statusMessage: 'Query must not be blank.'
         }));
     }
 
-    const { data: userInfo, error } = await findUserByUsername(username);
-
-    if (error || !userInfo) {
-        return sendError(event, createError({
-            statusCode: 404,
-            statusMessage: 'User not found.'
-        }));
-    }
-
+    // https://stackoverflow.com/a/26814550
     const results = await Review
-        .find({ author: userInfo._id })
+        .find({ title: { "$regex": query, "$options": "i" } })
         .populate('author', 'username') // load the username from the linked author
         .lean()
         .exec();
