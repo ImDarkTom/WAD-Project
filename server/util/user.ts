@@ -1,3 +1,4 @@
+import { UserSchemaType } from "~~/shared/schemas";
 import { User } from "../models/user";
 
 export async function createUserAndGetSession(username: string, password: string): Promise<{ error: { text: string, code: number }, data: null } | { error: null, data: string }> {
@@ -23,7 +24,8 @@ export async function createUserAndGetSession(username: string, password: string
 
 export async function signInUser(username: string, password: string): Promise<
     { error: { text: string, code: number }, data: null } | 
-    { error: null, data: string } > {
+    { error: null, data: string }
+>{
 
     const foundUser = await User.findOne({ username }).lean();
 
@@ -37,4 +39,17 @@ export async function signInUser(username: string, password: string): Promise<
     } else {
         return { error: { text: 'Incorrect password', code: 403 }, data: null };
     }
+}
+
+export async function findUserByUsername(username:string): Promise<
+    { error: { text: string, code: number }, data: null } | 
+    { error: null, data: MongooseSchema<UserSchemaType> }
+> {
+    const foundUser = await User.findOne({ username }).lean();
+
+    if (!foundUser) {
+        return { error: { text: 'No user with that name exists.', code: 404 }, data: null };
+    }
+
+    return { error: null, data: (foundUser as unknown as MongooseSchema<UserSchemaType>) };
 }

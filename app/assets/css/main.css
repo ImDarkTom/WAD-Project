@@ -24,5 +24,15 @@
 }
 
 body {
-    @apply bg-surface text-brand-50 md:overflow-hidden;
+    @apply bg-surface text-text-secondary md:overflow-hidden;
+}
+
+@layer components {
+    .card {
+        @apply w-full ring-1 ring-inset ring-highlight p-4 rounded-lg;
+    }
+
+    .card-container {
+        @apply flex flex-col gap-4 max-w-2xl w-full mx-auto;
+    }
 }

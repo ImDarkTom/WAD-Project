@@ -11,7 +11,7 @@ const username = useCookie('username');
 </script>
 
 <template>
-    <div class="mx-auto max-w-prose w-full flex flex-col gap-4">
+    <div class="card-container">
         <ActionBar>
             <span class="text-lg">Hello, <span class="text-brand-300">{{ username }}</span></span>
             <div class="flex flex-row gap-2">
@@ -39,7 +39,7 @@ const username = useCookie('username');
         <div v-else-if="error || !reviews">
             {{ error ?? 'An error occured.' }}
         </div>
-        <main class="max-h-full overflow-y-auto" v-else>
+        <main class="overflow-y-auto" v-else>
             <ul class="flex flex-col gap-4">
                 <span>Recent Reviews</span>
                 <li v-for="review in reviews">

@@ -9,7 +9,7 @@ const props = defineProps<{
 </script>
 
 <template>
-    <article class="w-full ring-1 ring-inset ring-highlight p-4 rounded-lg">
+    <article class="card">
         <div class="flex flex-row justify-between">
             <h2 class="text-xl">{{ review.title }}</h2>
             <RouterLink :to="`/works/${review.book.workId}`">

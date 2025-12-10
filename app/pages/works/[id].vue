@@ -46,7 +46,7 @@ const starRating = ref(0);
 </script>
 
 <template>
-    <div class="flex flex-col gap-4 max-w-prose mx-auto">
+    <div class="card-container">
         <div v-if="pending">
             <LoadingIcon />
         </div>
@@ -74,7 +74,7 @@ const starRating = ref(0);
                 </RouterLink>
             </ActionBar>
             <div class="flex flex-col gap-4 overflow-y-auto">
-                <div class="flex flex-row gap-4 ring-1 ring-highlight ring-inset p-4 rounded-lg">
+                <div class="flex flex-row gap-4 card">
                     <img 
                     :src="`https://covers.openlibrary.org/b/id/${data.covers[0]}-M.jpg`" 
                     :alt="`Cover for ` + data.title"
@@ -84,7 +84,7 @@ const starRating = ref(0);
                         <p class="text-text-secondary">{{ data.description }}</p>
                     </div>
                 </div>
-                <div class="flex flex-col gap-4 ring-1 ring-highlight ring-inset p-4 rounded-lg mb-24">
+                <div class="flex flex-col gap-4 card mb-24">
                     <h2 class="text-xl font-medium">Review</h2>
                     <ReviewForm :work-id="(workId as string)" />
                 </div>

@@ -9,7 +9,7 @@ const { data: review, error, pending } = useFetch<MongooseSchema<PopulatedReview
 </script>
 
 <template>
-    <div class="flex flex-col gap-4 max-w-prose w-full mx-auto">
+    <div class="card-container">
         <div v-if="pending">
             <LoadingIcon />
         </div>
@@ -37,7 +37,7 @@ const { data: review, error, pending } = useFetch<MongooseSchema<PopulatedReview
                 </RouterLink>
             </ActionBar>
             <div class="overflow-y-auto">
-                <div class="flex flex-col ring-1 ring-highlight ring-inset p-4 rounded-lg text-text-secondary">
+                <div class="flex flex-col card text-text-secondary">
                     <h1 class="text-3xl font-bold text-text">{{ review.title }}</h1>
                     <span>
                         Review for

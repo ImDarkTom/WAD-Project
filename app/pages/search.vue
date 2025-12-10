@@ -32,18 +32,27 @@ onSubmit();
 </script>
 
 <template>
-    <div class="w-full flex items-center justify-center">
-        <div class="mx-auto max-w-md w-full p-4 ring-1 ring-highlight rounded-lg flex flex-col gap-4 transition-all duration-150">
+    <div class="card-container">
+        <ActionBar>
+            <RouterLink to="/">
+                <ButtonOutlined>
+                    <Icon name="material-symbols:arrow-left-alt-rounded" />
+                    Home
+                </ButtonOutlined>
+            </RouterLink>
+        </ActionBar>
+        <div class="card">
             <form class="flex flex-row gap-2" @submit.prevent="onSubmit">
                 <input
                     v-model="search"
                     type="text" 
                     placeholder="Search for a book..." 
-                    class="p-2 w-full rounded-md outline-none" >
+                    class="p-2 w-full rounded-md outline-none text-text" >
                 <button type="submit" class="rounded-md hover:bg-base aspect-square flex items-center justify-center">
                     <Icon name="material-symbols:search-rounded" size="24" />
                 </button>
             </form>
+            <span class="text-xs">All book covers listed are properties of their respective owners.</span>
             <div v-if="isLoading" class="min-h-32 flex items-center justify-center">
                 <LoadingIcon />
             </div>
