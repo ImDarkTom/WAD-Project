@@ -1,5 +1,5 @@
 <template>
-    <nav class="bg-base flex flex-row items-center justify-between sticky top-0 left-0 p-4">
+    <nav class="bg-base flex flex-row items-center justify-between sticky top-0 left-0 px-4 min-h-18">
         <RouterLink to="/" class="text-lg font-medium">
             Book Reviews
         </RouterLink>

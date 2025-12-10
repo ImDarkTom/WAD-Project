@@ -25,7 +25,7 @@ export async function signInUser(username: string, password: string): Promise<
     { error: { text: string, code: number }, data: null } | 
     { error: null, data: string } > {
 
-    const foundUser = await User.findOne({ username });
+    const foundUser = await User.findOne({ username }).lean();
 
     if (!foundUser) {
         return { error: { text: 'No user with that name exists.', code: 404 }, data: null };

@@ -13,3 +13,13 @@ export type InsertReviewSchemaType = z.infer<typeof InsertReviewSchema>;
 export const ReviewSchema = InsertReviewSchema.extend({
     author: z.string(),
 });
+
+// The review after its been populated
+export const PopulatedReviewSchema = InsertReviewSchema.extend({
+    author: z.object({
+        '_id': z.string(),
+        username: z.string(),
+    }),
+});
+
+export type PopulatedReviewSchemaType = z.infer<typeof PopulatedReviewSchema>;

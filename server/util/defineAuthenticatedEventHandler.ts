@@ -4,8 +4,8 @@ import { User } from '../models/user';
 
 type AuthenticatedEvent = H3Event & {
     context: H3EventContext & {
-        token: string | undefined;
-        user: MongooseSchema<UserSchemaType>;
+        // token: string | undefined;
+        // user: MongooseSchema<UserSchemaType>;
     }
 };
 
@@ -22,7 +22,7 @@ export default function defineAuthenticatedEventHander<T>(
             }));
         }
 
-        const user = await User.findOne({ token });
+        const user = await User.findOne({ token }).lean();
 
         if (!user) {
             return sendError(event, createError({
