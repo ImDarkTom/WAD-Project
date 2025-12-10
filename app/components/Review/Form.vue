@@ -1,5 +1,5 @@
 <script setup lang="ts">
-import { ReviewSchema, type ReviewSchemaType } from '~~/shared/schemas';
+import { InsertReviewSchema, type InsertReviewSchemaType } from '~~/shared/schemas';
 import { FetchError } from 'ofetch'
 
 defineProps<{
@@ -11,7 +11,7 @@ const isSubmitted = ref(false);
 const submitError = ref('');
 
 const { handleSubmit, errors, meta, setErrors } = useForm({
-    validationSchema: toTypedSchema(ReviewSchema)
+    validationSchema: toTypedSchema(InsertReviewSchema)
 });
 
 const onSubmit = () => {
@@ -20,7 +20,7 @@ const onSubmit = () => {
             submitError.value = '';
             isLoading.value = true;
 
-            const body: ReviewSchemaType = {
+            const body: InsertReviewSchemaType = {
                 title: values.title,
                 content: values.content,
                 rating: starRating.value,
@@ -71,9 +71,7 @@ const starRating = ref(0);
                     <Icon name="material-symbols:star-half-rounded" size="32" />
                 </div>
             </div>
-        </div>
-        <div>
-
+            {{ errors }}
         </div>
         <button type="submit" class="bg-brand hover:bg-brand/75 p-2 rounded-sm">
             Publish

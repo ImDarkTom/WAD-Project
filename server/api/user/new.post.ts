@@ -1,8 +1,8 @@
 import { createUserAndGetSession } from '~~/server/util/user';
-import { UserSchema } from '~~/shared/schemas';
+import { InsertUserSchema } from '~~/shared/schemas';
 
 export default defineEventHandler(async (event) => {
-    const bodyParse = await readValidatedBody(event, UserSchema.safeParse);
+    const bodyParse = await readValidatedBody(event, InsertUserSchema.safeParse);
 
     if (!bodyParse.success) {
         const statusMessage = bodyParse.error.issues

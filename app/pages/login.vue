@@ -1,6 +1,6 @@
 <script setup lang="ts">
 import { toTypedSchema } from '@vee-validate/zod';
-import { UserSchema } from '~~/shared/schemas';
+import { InsertUserSchema } from '~~/shared/schemas';
 import { FetchError } from 'ofetch'
 
 definePageMeta({
@@ -12,7 +12,7 @@ const isSubmitted = ref(false);
 const submitError = ref('');
 
 const { handleSubmit, errors, meta, setErrors } = useForm({
-    validationSchema: toTypedSchema(UserSchema)
+    validationSchema: toTypedSchema(InsertUserSchema)
 });
 
 const onSubmit = () => {

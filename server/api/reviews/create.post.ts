@@ -1,8 +1,9 @@
 import { Review } from '~~/server/models/review';
-import { ReviewSchema } from '~~/shared/schemas'
+import defineAuthenticatedEventHander from '~~/server/util/defineAuthenticatedEventHandler';
+import { InsertReviewSchema } from '~~/shared/schemas'
 
-export default defineEventHandler(async (event) => {
-    const bodyParse = await readValidatedBody(event, ReviewSchema.safeParse);
+export default defineAuthenticatedEventHander(async (event) => {
+    const bodyParse = await readValidatedBody(event, InsertReviewSchema.safeParse);
 
     if (!bodyParse.success) {
         const statusMessage = bodyParse.error.issues
@@ -23,7 +24,8 @@ export default defineEventHandler(async (event) => {
     }
 
     const newReview = new Review({
-        ...bodyParse.data
+        ...bodyParse.data,
+        author: event.context.user._id,
     });
     
     const result = await newReview.save()

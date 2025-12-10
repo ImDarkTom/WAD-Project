@@ -1,6 +1,6 @@
 import z from 'zod';
 
-export const ReviewSchema = z.object({
+export const InsertReviewSchema = z.object({
     title: z.string().min(3, "Title must be at least 3 characters!").max(256, "Title must be at most 256 characters!"),
     content: z.string().min(1, "Content must not be blank!").max(3000, "Too long!"),
     rating: z.number().min(0).max(10),
@@ -8,4 +8,8 @@ export const ReviewSchema = z.object({
     cons: z.array(z.string()).optional()
 });
 
-export type ReviewSchemaType = z.infer<typeof ReviewSchema>;
+export type InsertReviewSchemaType = z.infer<typeof InsertReviewSchema>;
+
+export const ReviewSchema = InsertReviewSchema.extend({
+    author: z.string(),
+});
