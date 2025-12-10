@@ -5,13 +5,13 @@ import mongoose, { Schema } from 'mongoose';
 
 const reviewSchema = new Schema({
     title: {
-        type: 'string',
+        type: String,
         required: true,
         minLength: 3,
         maxLength: 256,
     },
     content: {
-        type: 'string',
+        type: String,
         required: true,
         minLength: 1,
         maxLength: 3000,
@@ -30,7 +30,8 @@ const reviewSchema = new Schema({
     },
     author: {
         type: Schema.Types.ObjectId,
-        ref: 'User'
+        ref: 'User',
+        required: true,
     },
 }, {
     timestamps: true,
