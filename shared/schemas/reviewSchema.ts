@@ -37,6 +37,8 @@ export const PopulatedReviewSchema = ReviewSchema.extend({
         title: z.string(),
         workId: z.string(),
     }),
+    createdAt: z.string(),
+    updatedAt: z.string(),
 });
 
 export type PopulatedReviewSchemaType = z.infer<typeof PopulatedReviewSchema>;

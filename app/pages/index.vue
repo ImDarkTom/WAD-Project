@@ -12,15 +12,27 @@ const username = useCookie('username');
 
 <template>
     <div class="mx-auto max-w-prose w-full flex flex-col gap-4">
-        <div class="flex flex-row justify-between bg-base p-4 rounded-lg">
+        <ActionBar>
             <span class="text-lg">Hello, <span class="text-brand-300">{{ username }}</span></span>
-            <RouterLink :to="`/reviews/${username}`">
-                <button class="flex flex-row items-center justify-center font-medium gap-1 ring-1 ring-highlight hover:bg-highlight rounded-md p-1 pl-2">
-                    My Reviews
-                    <Icon name="material-symbols:arrow-right-alt-rounded" size="24" />
-                </button>
-            </RouterLink>
-        </div>
+            <div class="flex flex-row gap-2">
+                <RouterLink :to="`/reviews/${username}`">
+                    <ButtonOutlined>
+                        My Reviews
+                        <Icon name="material-symbols:arrow-right-alt-rounded" size="24" />
+                    </ButtonOutlined>
+                </RouterLink>
+                <RouterLink to="/search">
+                    <ButtonOutlined>
+                        <Icon name="material-symbols:search-rounded" />
+                        Search books
+                    </ButtonOutlined>
+                </RouterLink>
+                <ButtonOutlined @click="signOut">
+                    <Icon name="material-symbols:logout-rounded" />
+                    Logout
+                </ButtonOutlined>
+            </div>
+        </ActionBar>
         <div v-if="pending">
             <LoadingIcon size="32" />
         </div>

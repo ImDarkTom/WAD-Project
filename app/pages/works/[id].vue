@@ -46,7 +46,7 @@ const starRating = ref(0);
 </script>
 
 <template>
-    <div class="flex flex-col gap-4 max-w-5xl mx-auto">
+    <div class="flex flex-col gap-4 max-w-prose mx-auto">
         <div v-if="pending">
             <LoadingIcon />
         </div>
@@ -59,18 +59,35 @@ const starRating = ref(0);
             </RouterLink>
         </div>
         <template v-else>
-            <div class="flex flex-row gap-4 ring-1 ring-highlight p-4 rounded-lg">
-                <img 
+            <ActionBar>
+                <RouterLink to="/">
+                    <ButtonOutlined>
+                        <Icon name="material-symbols:arrow-left-alt" />
+                        Home
+                    </ButtonOutlined>
+                </RouterLink>
+                <RouterLink to="/search">
+                    <ButtonOutlined>
+                        <Icon name="material-symbols:search-rounded" />
+                        Search books
+                    </ButtonOutlined>
+                </RouterLink>
+            </ActionBar>
+            <div class="flex flex-col gap-4 overflow-y-auto">
+                <div class="flex flex-row gap-4 ring-1 ring-highlight ring-inset p-4 rounded-lg">
+                    <img 
                     :src="`https://covers.openlibrary.org/b/id/${data.covers[0]}-M.jpg`" 
-                    :alt="`Cover for ` + data.title">
-                <div class="flex flex-col gap-2">
-                    <h1 class="text-5xl font-bold">{{ data.title }}</h1>
-                    <p class="text-text-secondary">{{ data.description }}</p>
+                    :alt="`Cover for ` + data.title"
+                    class="size-80">
+                    <div class="flex flex-col gap-2">
+                        <h1 class="text-5xl font-bold">{{ data.title }}</h1>
+                        <p class="text-text-secondary">{{ data.description }}</p>
+                    </div>
                 </div>
-            </div>
-            <div class="flex flex-col gap-4 ring-1 ring-highlight p-4 rounded-lg">
-                <h2 class="text-xl font-medium">Review</h2>
-                <ReviewForm :work-id="(workId as string)" />
+                <div class="flex flex-col gap-4 ring-1 ring-highlight ring-inset p-4 rounded-lg mb-24">
+                    <h2 class="text-xl font-medium">Review</h2>
+                    <ReviewForm :work-id="(workId as string)" />
+                </div>
             </div>
         </template>
     </div>

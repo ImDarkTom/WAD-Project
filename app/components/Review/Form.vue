@@ -64,14 +64,7 @@ const starRating = ref(0);
                 min="0" 
                 max="10"
                 class="accent-brand w-[calc((32px*4)+(1.5rem*5))]" />
-            <div class="flex flex-row gap-6">
-                <div v-for="n of Math.floor(starRating / 2)" :key="n">
-                    <Icon name="material-symbols:star-rounded" size="32" />
-                </div>
-                <div v-if="starRating % 2 == 1">
-                    <Icon name="material-symbols:star-half-rounded" size="32" />
-                </div>
-            </div>
+            <StarRating :rating="starRating" />
             <!-- {{ errors }} -->
         </div>
         <button type="submit" class="bg-brand hover:bg-brand/75 p-2 rounded-sm">

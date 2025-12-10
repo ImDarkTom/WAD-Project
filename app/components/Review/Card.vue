@@ -3,7 +3,7 @@ import type { RouterLink } from 'vue-router';
 import type { PopulatedReviewSchemaType } from '~~/shared/schemas';
 
 const props = defineProps<{
-    review: MongooseSchema<PopulatedReviewSchemaType>
+    review: MongooseSchema<PopulatedReviewSchemaType>,
 }>();
 
 </script>
@@ -19,12 +19,7 @@ const props = defineProps<{
                 </span>
             </RouterLink>
         </div>
-        <span class="text-text-secondary text-sm"> 
-            by
-            <RouterLink :to="`/reviews/${props.review.author.username}`" class="hover:underline">
-                {{ review.author.username }}
-            </RouterLink>
-        </span>
+        <AuthorLink :review />
         <p class="py-1 text-text-secondary">{{ review.content }}{{ review.content.length < 70 ? '' : '…' }}</p>
         <RouterLink :to="`/review/${review._id}`">
             <button class="bg-brand hover:bg-brand/70 font-medium p-2 rounded-sm">

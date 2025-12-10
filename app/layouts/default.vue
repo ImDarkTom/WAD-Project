@@ -1,7 +1,6 @@
 <template>
     <div class="w-screen h-screen flex flex-col">
-        <AppNavBar />
-        <div class="p-4 flex grow max-h-[calc(100%-4.5rem)]">
+        <div class="p-4 flex grow max-h-screen">
             <slot />
         </div>
     </div>
