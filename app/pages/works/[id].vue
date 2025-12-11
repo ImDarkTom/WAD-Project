@@ -67,7 +67,6 @@ function parseRatings(reviews: MongooseSchema<PopulatedReviewSchemaType>[]) {
 
     for (const review of reviews) {
         const key = Math.floor(review.rating / 2); // forces it down to 0 to 5
-        console.log(ratings, key)
         ratings[key] = ratings[key]! + 1;
     }
 
@@ -124,8 +123,11 @@ function parseRatings(reviews: MongooseSchema<PopulatedReviewSchemaType>[]) {
                 <div v-if="reviewsPending">
                     <LoadingIcon />
                 </div>
-                <div v-if="reviewsError || !reviewsInfo">
+                <div v-else-if="reviewsError || !reviewsInfo">
                     {{ reviewsError }}
+                </div>
+                <div v-else-if="reviewsInfo.length == 0">
+                    No reviews yet...
                 </div>
                 <Bar
                     v-else
@@ -141,9 +143,15 @@ function parseRatings(reviews: MongooseSchema<PopulatedReviewSchemaType>[]) {
                     <div>Failed to load chart</div>
                 </Bar>
             </div>
-            <div class="card mb-24">
+            <div class="card">
                 <h2 class="text-xl font-medium">Write a review</h2>
                 <ReviewForm :work-id="(workId as string)" />
+            </div>
+            <div v-if="reviewsInfo && reviewsInfo.length > 0" class="mb-24">
+                <span class="text-3xl font-medium">What others think</span>
+                <div class="flex flex-col gap-2">
+                    <ReviewCard v-for="review of reviewsInfo" :review />
+                </div>
             </div>
         </div>
     </div>
