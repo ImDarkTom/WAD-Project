@@ -7,7 +7,7 @@ definePageMeta({
 
 const { data: reviews, error, pending, refresh } = useFetch('/api/reviews/all');
 
-const username = useCookie('username');
+const username = useCookie('username').value;
 
 const searchQuery = ref('');
 

@@ -10,7 +10,7 @@ const reviewId = route.params.id as string; // we know id has to exist since Nux
 
 const { data: review, error, pending } = useFetch<MongooseSchema<PopulatedReviewSchemaType>>(`/api/reviews/${reviewId}`, { lazy: true });
 
-const username = useCookie('username');
+const username = useCookie('username').value;
 </script>
 
 <template>
@@ -52,7 +52,7 @@ const username = useCookie('username');
                 <AuthorLink :review />
                 <div class="max-w-min rounded-md">
                     <RouterLink 
-                        v-if="username = review.author.username"
+                        v-if="username === review.author.username"
                         :to="`/review/${review._id}/edit`">
                         <ButtonOutlined class="pr-2">
                             <Icon name="material-symbols:edit-outline-rounded" />

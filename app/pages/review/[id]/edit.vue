@@ -1,15 +1,22 @@
 <script setup lang="ts">
+import type { PopulatedReviewSchemaType } from '~~/shared/schemas';
+
 definePageMeta({
     middleware: 'ensure-auth'
 });
-
-import type { PopulatedReviewSchemaType } from '~~/shared/schemas';
 
 const route = useRoute();
 const reviewId = route.params.id as string; // we know id has to exist since Nuxt will 404 `/review/`. 
 
 const { data: review, error, pending } = useFetch<MongooseSchema<PopulatedReviewSchemaType>>(`/api/reviews/${reviewId}`);
 
+const username = useCookie('username');
+
+const canEdit = computed(() => {
+    if (!review.value) return false;
+
+    return username.value === review.value.author.username;
+});
 </script>
 
 <template>
@@ -34,9 +41,12 @@ const { data: review, error, pending } = useFetch<MongooseSchema<PopulatedReview
             </RouterLink>
         </div>
         <div v-else class="overflow-y-auto">
-            <div class="flex flex-col card text-text-secondary">
+            <div v-if="canEdit" class="flex flex-col card text-text-secondary">
                 <h1 class="text-3xl font-medium">Editing '{{ review.title }}'</h1>
                 <ReviewEditor :review />
+            </div>
+            <div v-else>
+                You do not have the permissions to edit this review.
             </div>
         </div>
     </div>

@@ -29,6 +29,14 @@ export default defineAuthenticatedEventHander(async (event) => {
         }));
     }
 
+    // authenticate
+    if (result.author !== event.context.token) {
+        return sendError(event, createError({
+            statusCode: 401,
+            statusMessage: 'Unauthorized'
+        }));
+    }
+
     // Validate body
     const bodyParse = await readValidatedBody(event, InsertReviewSchema.safeParse);
     
