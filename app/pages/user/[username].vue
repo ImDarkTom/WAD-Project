@@ -7,6 +7,10 @@ const route = useRoute();
 const username = route.params.username;
 
 const { data: userReviews, error, pending } = useFetch(`/api/user-reviews/${username}`, { lazy: true });
+
+useHead({
+    title: `${username} | Book Reviews`,   
+});
 </script>
 
 <template>

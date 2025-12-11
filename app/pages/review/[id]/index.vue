@@ -11,6 +11,10 @@ const reviewId = route.params.id as string; // we know id has to exist since Nux
 const { data: review, error, pending } = useFetch<MongooseSchema<PopulatedReviewSchemaType>>(`/api/reviews/${reviewId}`, { lazy: true });
 
 const username = useCookie('username').value;
+
+useHead({
+    title: computed(() => review.value?.title ? `${review.value.title} | Book Reviews` : 'Book Reviews'),   
+});
 </script>
 
 <template>

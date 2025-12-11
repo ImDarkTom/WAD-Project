@@ -1,6 +1,10 @@
 <script setup lang="ts">
 import { RouterLink } from 'vue-router';
 
+useHead({
+    title: 'Dashboard | Book Reviews',
+});
+
 definePageMeta({
     middleware: 'ensure-auth'
 });

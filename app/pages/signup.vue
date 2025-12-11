@@ -1,7 +1,11 @@
 <script setup lang="ts">
 import { toTypedSchema } from '@vee-validate/zod';
 import { InsertUserSchema } from '~~/shared/schemas';
-import { FetchError } from 'ofetch'
+import { FetchError } from 'ofetch';
+
+useHead({
+    title: 'Sign Up | Book Reviews',
+});
 
 definePageMeta({
     middleware: 'ensure-unauthed'

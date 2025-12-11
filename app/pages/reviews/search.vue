@@ -6,6 +6,10 @@ definePageMeta({
 const route = useRoute();
 const query = route.query.q ?? '';
 
+useHead({
+    title: `'${query}' review titles | Book Reviews`
+});
+
 const { data: reviews, error, pending } = useFetch(`/api/reviews/search/${query}`, { lazy: true });
 </script>
 

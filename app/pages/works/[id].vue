@@ -72,6 +72,10 @@ function parseRatings(reviews: MongooseSchema<PopulatedReviewSchemaType>[]) {
 
     return Object.values(ratings); // convert to list
 }
+
+useHead({
+    title: computed(() => workInfo.value?.title ? `${workInfo.value.title} | Book Reviews` : 'Book Reviews'),   
+});
 </script>
 
 <template>

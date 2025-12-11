@@ -3,6 +3,10 @@ import { toTypedSchema } from '@vee-validate/zod';
 import { InsertUserSchema } from '~~/shared/schemas';
 import { FetchError } from 'ofetch'
 
+useHead({
+    title: 'Login | Book Reviews',
+});
+
 definePageMeta({
     middleware: 'ensure-unauthed'
 });

@@ -17,6 +17,10 @@ const canEdit = computed(() => {
 
     return username.value === review.value.author.username;
 });
+
+useHead({
+    title: computed(() => review.value?.title ? `Editing ${review.value.title} | Book Reviews` : 'Book Reviews'),   
+});
 </script>
 
 <template>

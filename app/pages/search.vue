@@ -1,4 +1,8 @@
 <script setup lang="ts">
+useHead({
+    title: 'Search Books | Book Reviews',
+});
+
 definePageMeta({
     middleware: 'ensure-auth'
 });
