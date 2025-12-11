@@ -109,14 +109,12 @@ function parseRatings(reviews: MongooseSchema<PopulatedReviewSchemaType>[]) {
                     Back home?
                 </RouterLink>
             </div>
-            <div v-else class="flex flex-col gap-4">
-                <div class="flex flex-row gap-4 card">
-                    <img :src="`https://covers.openlibrary.org/b/id/${workInfo.covers[0]}-M.jpg`"
-                        :alt="`Cover for ` + workInfo.title" class="size-80">
-                    <div class="flex flex-col gap-2">
-                        <h1 class="text-5xl font-bold">{{ workInfo.title }}</h1>
-                        <p class="text-text-secondary">{{ workInfo.description }}</p>
-                    </div>
+            <div v-else class="flex flex-col sm:flex-row gap-4 card">
+                <img :src="`https://covers.openlibrary.org/b/id/${workInfo.covers[0]}-M.jpg`"
+                    :alt="`Cover for ` + workInfo.title" class="w-48 mx-auto sm:mx-0 sm:size-80">
+                <div class="flex flex-col gap-2">
+                    <h1 class="text-5xl font-bold">{{ workInfo.title }}</h1>
+                    <p class="text-text-secondary leading-loose">{{ workInfo.description }}</p>
                 </div>
             </div>
             <div class="card">

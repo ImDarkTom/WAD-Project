@@ -20,7 +20,7 @@ function onSubmit() {
     <div class="card-container gap-2">
         <ActionBar>
             <span class="text-lg">Hello, <span class="text-brand-300">{{ username }}</span></span>
-            <div class="flex flex-row gap-2">
+            <div class="flex flex-col sm:flex-row gap-2">
                 <RouterLink :to="`/user/${username}`">
                     <ButtonOutlined>
                         My Reviews
