@@ -10,6 +10,14 @@ const { data: review, error, pending } = useFetch<MongooseSchema<PopulatedReview
 
 <template>
     <div class="card-container">
+        <ActionBar>
+            <RouterLink to="/">
+                <ButtonOutlined>
+                    <Icon name="material-symbols:arrow-left-alt-rounded" />
+                    Cancel
+                </ButtonOutlined>
+            </RouterLink>
+        </ActionBar>
         <div v-if="pending">
             <LoadingIcon />
         </div>
@@ -21,21 +29,11 @@ const { data: review, error, pending } = useFetch<MongooseSchema<PopulatedReview
                 Back home?
             </RouterLink>
         </div>
-        <template v-else>
-            <ActionBar>
-                <RouterLink to="/">
-                    <ButtonOutlined>
-                        <Icon name="material-symbols:arrow-left-alt-rounded" />
-                        Cancel
-                    </ButtonOutlined>
-                </RouterLink>
-            </ActionBar>
-            <div class="overflow-y-auto">
-                <div class="flex flex-col card text-text-secondary">
-                    <h1 class="text-3xl font-medium">Editing '{{ review.title }}'</h1>
-                    <ReviewEditor :review />
-                </div>
+        <div v-else class="overflow-y-auto">
+            <div class="flex flex-col card text-text-secondary">
+                <h1 class="text-3xl font-medium">Editing '{{ review.title }}'</h1>
+                <ReviewEditor :review />
             </div>
-        </template>
+        </div>
     </div>
 </template>

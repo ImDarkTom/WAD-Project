@@ -1,6 +1,7 @@
 <script setup lang="ts">
 import type { RouterLink } from 'vue-router';
 import type { PopulatedReviewSchemaType } from '~~/shared/schemas';
+import StarRating from './StarRating.vue';
 
 const props = defineProps<{
     review: MongooseSchema<PopulatedReviewSchemaType>,
@@ -15,13 +16,14 @@ const props = defineProps<{
                 <h2 class="text-xl font-medium hover:underline">{{ review.title }}</h2>
             </RouterLink>
             <RouterLink :to="`/works/${review.book.workId}`">
-                <span class="text-lg text-text-secondary flex flex-row gap-1 items-center justify-center hover:bg-highlight py-0.5 px-1 rounded-sm">
+                <ButtonOutlined>
                     <Icon name="material-symbols:book-ribbon-outline-rounded" />
                     {{review.book.title}}
-                </span>
+                </ButtonOutlined>
             </RouterLink>
         </div>
+        <StarRating :rating="review.rating" :size="16" />
         <AuthorLink :review />
-        <p class="py-1 text-text-secondary">{{ review.content }}{{ review.content.length < 70 ? '' : '…' }}</p>
+        <p class="py-1 text-sm">{{ review.content }}{{ review.content.length < 70 ? '' : '…' }}</p>
     </article>
 </template>

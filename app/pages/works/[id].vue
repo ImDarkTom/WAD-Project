@@ -39,14 +39,25 @@ type WorkInfoResponse = {
     },
 }
 
-const { data, error, pending, refresh } = useFetch<WorkInfoResponse>(`https://openlibrary.org/works/${workId}.json`, { lazy: true });
-
-const starRating = ref(0);
-
+const { data, error, pending } = useFetch<WorkInfoResponse>(`https://openlibrary.org/works/${workId}.json`, { lazy: true });
 </script>
 
 <template>
     <div class="card-container">
+        <ActionBar>
+            <RouterLink to="/">
+                <ButtonOutlined>
+                    <Icon name="material-symbols:arrow-left-alt" />
+                    Home
+                </ButtonOutlined>
+            </RouterLink>
+            <RouterLink to="/search">
+                <ButtonOutlined>
+                    <Icon name="material-symbols:search-rounded" />
+                    Search books
+                </ButtonOutlined>
+            </RouterLink>
+        </ActionBar>
         <div v-if="pending">
             <LoadingIcon />
         </div>
@@ -59,20 +70,6 @@ const starRating = ref(0);
             </RouterLink>
         </div>
         <template v-else>
-            <ActionBar>
-                <RouterLink to="/">
-                    <ButtonOutlined>
-                        <Icon name="material-symbols:arrow-left-alt" />
-                        Home
-                    </ButtonOutlined>
-                </RouterLink>
-                <RouterLink to="/search">
-                    <ButtonOutlined>
-                        <Icon name="material-symbols:search-rounded" />
-                        Search books
-                    </ButtonOutlined>
-                </RouterLink>
-            </ActionBar>
             <div class="flex flex-col gap-4 overflow-y-auto">
                 <div class="flex flex-row gap-4 card">
                     <img 
@@ -85,7 +82,7 @@ const starRating = ref(0);
                     </div>
                 </div>
                 <div class="flex flex-col gap-4 card mb-24">
-                    <h2 class="text-xl font-medium">Add a review</h2>
+                    <h2 class="text-xl font-medium">Write a review</h2>
                     <ReviewForm :work-id="(workId as string)" />
                 </div>
             </div>

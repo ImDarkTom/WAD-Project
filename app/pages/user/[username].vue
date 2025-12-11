@@ -3,7 +3,6 @@ const route = useRoute();
 const username = route.params.username;
 
 const { data: userReviews, error, pending } = useFetch(`/api/user-reviews/${username}`, { lazy: true });
-
 </script>
 
 <template>
@@ -19,9 +18,15 @@ const { data: userReviews, error, pending } = useFetch(`/api/user-reviews/${user
         <div class="card">
             <h1 class="text-3xl font-medium">{{ username }}'s Reviews</h1>
         </div>
-        <div class="overflow-y-auto">
+        <div v-if="pending">
+            <LoadingIcon />
+        </div>
+        <div v-else-if="error || !userReviews">
+            {{ error }}
+        </div>
+        <div v-else class="overflow-y-auto">
             <div class="flex flex-col gap-4 mb-24">
-                <ReviewCard v-for="review in userReviews" :review />
+                <ReviewCard v-for="review in userReviews" :review="(review as any)" />
             </div>
         </div>
     </div>

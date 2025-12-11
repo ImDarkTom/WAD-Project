@@ -41,16 +41,18 @@ onSubmit();
                 </ButtonOutlined>
             </RouterLink>
         </ActionBar>
-        <div class="card">
+        <div class="card flex flex-col">
+            <span>Search books</span>
             <form class="flex flex-row gap-2" @submit.prevent="onSubmit">
                 <input
                     v-model="search"
                     type="text" 
                     placeholder="Search for a book..." 
-                    class="p-2 w-full rounded-md outline-none text-text" >
-                <button type="submit" class="rounded-md hover:bg-base aspect-square flex items-center justify-center">
+                    class="outline-none ring-1 focus:ring-2 ring-highlight focus:ring-brand rounded-sm p-2 w-full" 
+                    required>
+                <ButtonOutlined type="submit" class="px-2">
                     <Icon name="material-symbols:search-rounded" size="24" />
-                </button>
+                </ButtonOutlined>
             </form>
             <span class="text-xs">All book covers listed are properties of their respective owners.</span>
             <div v-if="isLoading" class="min-h-32 flex items-center justify-center">

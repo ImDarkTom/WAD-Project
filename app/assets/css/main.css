@@ -32,7 +32,7 @@ body {
 
 @layer components {
     .card {
-        @apply w-full ring-1 ring-inset ring-highlight p-4 rounded-lg;
+        @apply w-full ring-1 ring-inset ring-highlight bg-base p-4 rounded-lg;
     }
 
     .card-container {
