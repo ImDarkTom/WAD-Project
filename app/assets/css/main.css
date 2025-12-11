@@ -28,6 +28,7 @@
 
 body {
     @apply bg-surface text-text-secondary md:overflow-hidden;
+    scrollbar-color: hsl(300, 15%, 30%) hsl(300, 15%, 20%);
 }
 
 @layer components {
