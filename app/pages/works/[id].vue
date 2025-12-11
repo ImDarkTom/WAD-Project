@@ -1,4 +1,8 @@
 <script setup lang="ts">
+import type { ChartData, ChartOptions } from 'chart.js';
+import { Bar } from 'vue-chartjs';
+import type { PopulatedReviewSchemaType } from '~~/shared/schemas';
+
 definePageMeta({
     middleware: 'ensure-auth'
 });
@@ -39,7 +43,43 @@ type WorkInfoResponse = {
     },
 }
 
-const { data, error, pending } = useFetch<WorkInfoResponse>(`https://openlibrary.org/works/${workId}.json`, { lazy: true });
+const { data: workInfo, error: workInfoError, pending: workInfoPending } = useFetch<WorkInfoResponse>(`https://openlibrary.org/works/${workId}.json`, { lazy: true });
+const { data: reviewsInfo, error: reviewsError, pending: reviewsPending } = useFetch<MongooseSchema<PopulatedReviewSchemaType>[]>(`/api/reviews/work/${workId}`, { lazy: true });
+
+const data: Omit<ChartData<"bar">, 'datasets'> = {
+    labels: ['1☆', '2☆', '3☆', '4☆', '5☆'],
+};
+
+const options: ChartOptions<"bar"> = {
+    responsive: true,
+    maintainAspectRatio: false,
+}
+
+function parseRatings(reviews: MongooseSchema<PopulatedReviewSchemaType>[]) {
+    const ratings: Record<number, number> = {
+        0: 0,
+        1: 0,
+        2: 0,
+        3: 0,
+        4: 0,
+        5: 0
+    };
+
+    for (const review of reviews) {
+        const key = Math.floor(review.rating / 2); // forces it down to 0 to 5
+        console.log(ratings, key)
+        ratings[key] = ratings[key]! + 1;
+    }
+
+    return [
+        ratings[0],
+        ratings[1],
+        ratings[2],
+        ratings[3],
+        ratings[4],
+        ratings[5],
+    ] as number[];
+}
 </script>
 
 <template>
@@ -58,34 +98,53 @@ const { data, error, pending } = useFetch<WorkInfoResponse>(`https://openlibrary
                 </ButtonOutlined>
             </RouterLink>
         </ActionBar>
-        <div v-if="pending">
-            <LoadingIcon />
-        </div>
-        <div v-else-if="error || !data" class="flex flex-col gap-2 items-center">
-            <div class="flex min-w-full bg-errorbg p-4 rounded-lg">
-                Oh no! {{ error ?? 'No data for book found.'  }}
+        <div class="flex flex-col gap-4 overflow-y-auto">
+            <div v-if="workInfoPending">
+                <LoadingIcon />
             </div>
-            <RouterLink to="/" class="hover:underline">
-                Back home?
-            </RouterLink>
-        </div>
-        <template v-else>
-            <div class="flex flex-col gap-4 overflow-y-auto">
+            <div v-else-if="workInfoError || !workInfo" class="flex flex-col gap-2 items-center">
+                <div class="flex min-w-full bg-errorbg p-4 rounded-lg">
+                    Oh no! {{ workInfoError ?? 'No data for book found.' }}
+                </div>
+                <RouterLink to="/" class="hover:underline">
+                    Back home?
+                </RouterLink>
+            </div>
+            <div v-else class="flex flex-col gap-4">
                 <div class="flex flex-row gap-4 card">
-                    <img 
-                    :src="`https://covers.openlibrary.org/b/id/${data.covers[0]}-M.jpg`" 
-                    :alt="`Cover for ` + data.title"
-                    class="size-80">
+                    <img :src="`https://covers.openlibrary.org/b/id/${workInfo.covers[0]}-M.jpg`"
+                        :alt="`Cover for ` + workInfo.title" class="size-80">
                     <div class="flex flex-col gap-2">
-                        <h1 class="text-5xl font-bold">{{ data.title }}</h1>
-                        <p class="text-text-secondary">{{ data.description }}</p>
+                        <h1 class="text-5xl font-bold">{{ workInfo.title }}</h1>
+                        <p class="text-text-secondary">{{ workInfo.description }}</p>
                     </div>
                 </div>
-                <div class="flex flex-col gap-4 card mb-24">
-                    <h2 class="text-xl font-medium">Write a review</h2>
-                    <ReviewForm :work-id="(workId as string)" />
-                </div>
             </div>
-        </template>
+            <div class="card">
+                <div v-if="reviewsPending">
+                    <LoadingIcon />
+                </div>
+                <div v-if="reviewsError || !reviewsInfo">
+                    {{ reviewsError }}
+                </div>
+                <Bar
+                    v-else
+                    :data="{
+                        ...data,
+                        datasets: [{
+                            label: 'Ratings',
+                            backgroundColor: '#bf40bf',
+                            data: parseRatings(reviewsInfo),
+                        }],
+                    }"
+                    :options>
+                    <div>Failed to load chart</div>
+                </Bar>
+            </div>
+            <div class="card mb-24">
+                <h2 class="text-xl font-medium">Write a review</h2>
+                <ReviewForm :work-id="(workId as string)" />
+            </div>
+        </div>
     </div>
 </template>
