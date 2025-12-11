@@ -1,4 +1,8 @@
 <script setup lang="ts">
+definePageMeta({
+    middleware: 'ensure-auth'
+});
+
 import type { PopulatedReviewSchemaType } from '~~/shared/schemas';
 
 const route = useRoute();

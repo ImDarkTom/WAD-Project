@@ -1,4 +1,8 @@
 <script setup lang="ts">
+definePageMeta({
+    middleware: 'ensure-auth'
+});
+
 const route = useRoute();
 const query = route.query.q ?? '';
 

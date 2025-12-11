@@ -1,5 +1,8 @@
 <script setup lang="ts">
-import type LoadingIconVue from '~/components/LoadingIcon.vue';
+definePageMeta({
+    middleware: 'ensure-auth'
+});
+
 import type { PopulatedReviewSchemaType } from '~~/shared/schemas';
 
 const route = useRoute();

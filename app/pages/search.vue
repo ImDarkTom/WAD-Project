@@ -1,5 +1,9 @@
 <script setup lang="ts">
-const search = ref('dune');
+definePageMeta({
+    middleware: 'ensure-auth'
+});
+
+const search = ref('');
 
 const isLoading = ref(false);
 const searchResults = ref<OpenlibrarySearchResults['docs']>([]);
@@ -27,8 +31,6 @@ async function onSubmit() {
     searchResults.value = results.docs;
     isLoading.value = false;
 }
-
-onSubmit();
 </script>
 
 <template>
