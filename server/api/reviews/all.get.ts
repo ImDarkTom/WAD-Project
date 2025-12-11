@@ -14,5 +14,5 @@ export default defineEventHandler(async (event) => {
             content: result.content.substring(0, 70)
     }));
 
-    return formattedResults as unknown as MongooseSchema<PopulatedReviewSchemaType>[];
+    return formattedResults.reverse() as unknown as MongooseSchema<PopulatedReviewSchemaType>[];
 });

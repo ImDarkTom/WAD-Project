@@ -47,7 +47,7 @@ const { data: workInfo, error: workInfoError, pending: workInfoPending } = useFe
 const { data: reviewsInfo, error: reviewsError, pending: reviewsPending } = useFetch<MongooseSchema<PopulatedReviewSchemaType>[]>(`/api/reviews/work/${workId}`, { lazy: true });
 
 const data: Omit<ChartData<"bar">, 'datasets'> = {
-    labels: ['1☆', '2☆', '3☆', '4☆', '5☆'],
+    labels: ['0☆', '1☆', '2☆', '3☆', '4☆', '5☆'],
 };
 
 const options: ChartOptions<"bar"> = {
@@ -70,14 +70,7 @@ function parseRatings(reviews: MongooseSchema<PopulatedReviewSchemaType>[]) {
         ratings[key] = ratings[key]! + 1;
     }
 
-    return [
-        ratings[0],
-        ratings[1],
-        ratings[2],
-        ratings[3],
-        ratings[4],
-        ratings[5],
-    ] as number[];
+    return Object.values(ratings); // convert to list
 }
 </script>
 
