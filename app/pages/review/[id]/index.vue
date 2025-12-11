@@ -15,6 +15,16 @@ const username = useCookie('username').value;
 useHead({
     title: computed(() => review.value?.title ? `${review.value.title} | Book Reviews` : 'Book Reviews'),   
 });
+
+async function deleteReview() {
+    // review.value must be there since this is only acessible once we have loaded
+    const confirmed = confirm(`Are you sure you want to delete your review '${review.value!.title}'?`);
+
+    if (!confirmed) return;
+
+    await $fetch(`/api/reviews/${review.value!._id}`, { method: 'DELETE' });
+    navigateTo('/');
+}
 </script>
 
 <template>
@@ -54,15 +64,18 @@ useHead({
                     <RouterLink :to="`/works/${review.book.workId}`" class="hover:underline">{{ review.book.title }}</RouterLink>
                 </span>
                 <AuthorLink :review />
-                <div class="max-w-min rounded-md">
+                <div v-if="username === review.author.username" class="flex flex-row gap-2">
                     <RouterLink 
-                        v-if="username === review.author.username"
                         :to="`/review/${review._id}/edit`">
                         <ButtonOutlined class="pr-2">
                             <Icon name="material-symbols:edit-outline-rounded" />
                             Edit
                         </ButtonOutlined>
                     </RouterLink>
+                    <ButtonOutlined @click="deleteReview">
+                        <Icon name="material-symbols:delete-outline-rounded" />
+                        Delete
+                    </ButtonOutlined>
                 </div>
                 <div class="bg-highlight w-full h-px px-8 my-4" />
                 <ReviewStarRating :rating="review.rating" />
