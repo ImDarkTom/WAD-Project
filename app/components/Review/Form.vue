@@ -64,8 +64,7 @@ const starRating = ref(0);
                 min="0" 
                 max="10"
                 class="accent-brand w-[calc((32px*4)+(1.5rem*5))]" />
-            <StarRating :rating="starRating" />
-            <!-- {{ errors }} -->
+            <ReviewStarRating :rating="starRating" />
         </div>
         <button type="submit" class="bg-brand hover:bg-brand/75 p-2 rounded-sm">
             Publish

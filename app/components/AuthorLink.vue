@@ -7,9 +7,9 @@ defineProps<{
 </script>
 
 <template>
-    <span class="text-text-secondary text-sm">
+    <span>
         by
-        <RouterLink :to="`/reviews/${review.author.username}`" class="hover:underline">
+        <RouterLink :to="`/user/${review.author.username}`" class="hover:underline">
             {{ review.author.username }}
         </RouterLink>
     </span>

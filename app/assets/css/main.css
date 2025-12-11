@@ -20,7 +20,10 @@
     --color-brand-50: hsl(300, 50%, 95%);
 
     --color-errortxt: hsl(0, 40%, 50%);
-    --color-errorbg: hsl(0, 50%, 25%)
+    --color-errorbg: hsl(0, 50%, 25%);
+
+    --color-positive: hsl(120, 80%, 70%);
+    --color-negative: hsl(0, 80%, 70%);
 }
 
 body {

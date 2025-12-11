@@ -12,7 +12,7 @@ const username = useCookie('username');
 const searchQuery = ref('');
 
 function onSubmit() {
-    navigateTo(`/search-reviews?q=${encodeURIComponent(searchQuery.value)}`);
+    navigateTo(`/reviews/search?q=${encodeURIComponent(searchQuery.value)}`);
 }
 </script>
 
@@ -21,7 +21,7 @@ function onSubmit() {
         <ActionBar>
             <span class="text-lg">Hello, <span class="text-brand-300">{{ username }}</span></span>
             <div class="flex flex-row gap-2">
-                <RouterLink :to="`/reviews/${username}`">
+                <RouterLink :to="`/user/${username}`">
                     <ButtonOutlined>
                         My Reviews
                         <Icon name="material-symbols:arrow-right-alt-rounded" size="24" />
@@ -55,9 +55,9 @@ function onSubmit() {
                         placeholder="e.g. 'Dune'"
                         class="outline-none ring-1 focus:ring-2 ring-highlight focus:ring-brand rounded-sm p-2 w-full"
                         required >
-                    <button type="submit" class="flex items-center justify-center hover:bg-highlight px-2 rounded-sm">
+                    <ButtonOutlined type="submit" class="flex items-center justify-center hover:bg-highlight px-2 rounded-sm">
                         <Icon name="material-symbols:search-rounded" size="24" />
-                    </button>
+                    </ButtonOutlined>
                 </form>
             </div>
             <main class="overflow-y-auto">

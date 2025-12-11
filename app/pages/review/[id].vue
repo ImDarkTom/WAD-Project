@@ -43,8 +43,11 @@ const { data: review, error, pending } = useFetch<MongooseSchema<PopulatedReview
                         Review for
                         <RouterLink :to="`/works/${review.book.workId}`" class="hover:underline">{{ review.book.title }}</RouterLink>
                     </span>
-                    <StarRating :rating="review.rating" />
                     <AuthorLink :review />
+                    <div class="bg-highlight w-full h-px px-8 my-4" />
+                    <ReviewStarRating :rating="review.rating" />
+                    <ReviewProsConsList :pros="review.pros" :cons="review.cons" />
+                    <div class="bg-highlight w-full h-px px-8 my-4" />
                     <article class="my-4">
                         <p v-for="paragraph in review.content.split('\n\n')" class="not-last:mb-4 leading-relaxed">
                             {{ paragraph }}
