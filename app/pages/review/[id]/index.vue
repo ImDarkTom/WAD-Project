@@ -6,6 +6,7 @@ const reviewId = route.params.id as string; // we know id has to exist since Nux
 
 const { data: review, error, pending } = useFetch<MongooseSchema<PopulatedReviewSchemaType>>(`/api/reviews/${reviewId}`);
 
+const username = useCookie('username');
 </script>
 
 <template>
@@ -44,11 +45,19 @@ const { data: review, error, pending } = useFetch<MongooseSchema<PopulatedReview
                         <RouterLink :to="`/works/${review.book.workId}`" class="hover:underline">{{ review.book.title }}</RouterLink>
                     </span>
                     <AuthorLink :review />
+                    <RouterLink 
+                        v-if="username = review.author.username"
+                        :to="`/review/${review._id}/edit`"
+                        class="w-full">
+                        <ButtonOutlined>
+                            Edit
+                        </ButtonOutlined>
+                    </RouterLink>
                     <div class="bg-highlight w-full h-px px-8 my-4" />
                     <ReviewStarRating :rating="review.rating" />
                     <ReviewProsConsList :pros="review.pros" :cons="review.cons" />
                     <div class="bg-highlight w-full h-px px-8 my-4" />
-                    <article class="my-4">
+                    <article>
                         <p v-for="paragraph in review.content.split('\n\n')" class="not-last:mb-4 leading-relaxed">
                             {{ paragraph }}
                         </p>
