@@ -85,7 +85,7 @@ const starRating = ref(0);
                     </div>
                 </div>
                 <div class="flex flex-col gap-4 card mb-24">
-                    <h2 class="text-xl font-medium">Review</h2>
+                    <h2 class="text-xl font-medium">Add a review</h2>
                     <ReviewForm :work-id="(workId as string)" />
                 </div>
             </div>

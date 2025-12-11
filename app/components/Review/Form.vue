@@ -14,6 +14,10 @@ const { handleSubmit, errors, meta, setErrors } = useForm({
     validationSchema: toTypedSchema(InsertReviewSchema.omit({ book: true }))
 });
 
+function removeListWhitespaces(list: string[]) {
+    return list.filter(i => i !== '');
+}
+
 const onSubmit = () => {
     handleSubmit(async (values) => {
         try {
@@ -25,6 +29,8 @@ const onSubmit = () => {
                 content: values.content,
                 rating: starRating.value,
                 book: props.workId,
+                pros: removeListWhitespaces(pros.value),
+                cons: removeListWhitespaces(cons.value),
             };
 
             await $fetch('/api/reviews/create', {
@@ -49,13 +55,15 @@ const onSubmit = () => {
 }
 
 const starRating = ref(0);
+const pros = ref<string[]>(['']);
+const cons = ref<string[]>(['']);
 </script>
 
 <template>
     <form @submit.prevent="onSubmit">
         <FormInput label="Title" name="title" type="text" placeholder="My Great Review" :error="errors.title" />
         <FormTextarea label="Content" name="content" placeholder="I think that..." :error="errors.content" />
-        <div class="flex flex-col min-h-22">
+        <div class="flex flex-col">
             <span class="font-medium mt-1">Rating</span>
             <Field 
                 v-model="starRating" 
@@ -63,10 +71,13 @@ const starRating = ref(0);
                 type="range" 
                 min="0" 
                 max="10"
-                class="accent-brand w-[calc((32px*4)+(1.5rem*5))]" />
+                class="accent-brand w-64" />
             <ReviewStarRating :rating="starRating" />
+            <ReviewProsConsEditor 
+                v-model:pros="pros" 
+                v-model:cons="cons" />
         </div>
-        <button type="submit" class="bg-brand hover:bg-brand/75 p-2 rounded-sm">
+        <button type="submit" class="bg-brand hover:bg-brand/75 p-2 mt-4 rounded-sm">
             Publish
         </button>
     </form>
