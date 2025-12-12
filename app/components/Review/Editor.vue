@@ -70,9 +70,9 @@ const onSubmit = () => {
     })();
 }
 
-const starRating = ref(0);
-const pros = ref<string[]>(['']);
-const cons = ref<string[]>(['']);
+const starRating = ref(review.value.rating);
+const pros = ref<string[]>(review.value.pros ?? []);
+const cons = ref<string[]>(review.value.cons ?? []);
 </script>
 
 <template>
