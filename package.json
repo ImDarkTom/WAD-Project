@@ -27,6 +27,7 @@
     "zod": "^3.25.76"
   },
   "devDependencies": {
-    "@iconify-json/material-symbols": "^1.2.50"
+    "@iconify-json/material-symbols": "^1.2.50",
+    "@types/node": "^25.0.1"
   }
 }

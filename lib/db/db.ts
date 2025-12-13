@@ -1,5 +1,11 @@
 import mongoose from 'mongoose';
 
+const MONGODB_URI = process.env.MONGODB_URI ?? "";
+
 export async function connectDb() {
-    await mongoose.connect('mongodb://localhost:27017/WADReviews')
+    if (MONGODB_URI.length === 0) {
+        throw new Error("No MongoDB URI set in .env file.");
+    }
+
+    await mongoose.connect(MONGODB_URI)
 }
