@@ -67,7 +67,7 @@ function onSubmit() {
         </div>
         <main v-else class="overflow-y-auto">
             <ul class="flex flex-col gap-4">
-                <li v-for="review in [...reviews, ...reviews]">
+                <li v-for="review in reviews">
                     <ReviewCard :review />
                 </li>
             </ul>
