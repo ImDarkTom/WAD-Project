@@ -1,7 +1,7 @@
 import { Review } from "~~/server/models/review";
 import defineAuthenticatedEventHander from "~~/server/util/defineAuthenticatedEventHandler";
 import { getBookTitleByWorkId } from "~~/server/util/openlibrary";
-import { InsertReviewSchema, PopulatedReviewSchemaType, ReviewSchemaType } from "~~/shared/schemas";
+import { InsertReviewSchema, ReviewSchemaType } from "~~/shared/schemas";
 
 // https://nuxt.com/docs/4.x/directory-structure/server#error-handling
 
@@ -18,9 +18,9 @@ export default defineAuthenticatedEventHander(async (event) => {
 
     const result = await Review
         .findOne({ _id: id })
-        .populate('author', 'username') // load the username from the linked author
+        .populate('author', 'token') // load author token
         .lean()
-        .exec();
+        .exec() as unknown as MongooseSchema<ReviewSchemaType> & { author: { token: string } };
 
     if (!result) {
         return sendError(event, createError({
@@ -30,7 +30,7 @@ export default defineAuthenticatedEventHander(async (event) => {
     }
 
     // authenticate
-    if (result.author !== event.context.token) {
+    if (result.author.token !== event.context.token) {
         return sendError(event, createError({
             statusCode: 401,
             statusMessage: 'Unauthorized'

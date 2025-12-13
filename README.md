@@ -28,3 +28,5 @@ Locally preview production build:
 ```bash
 npm run preview
 ```
+
+If running directly from `.output/server/index.mjs`, [note on `.env` configuration](https://nuxt.com/docs/4.x/directory-structure/env#production-preview).
